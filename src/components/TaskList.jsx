@@ -1,7 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useFetchContext } from '../contexts/ContextApi'
+import TaskRow from './TaskRow';
 
 const TaskList = () => {
+
+    const { task } = useFetchContext();
+
     return (
         <>
             <header>
@@ -14,9 +19,22 @@ const TaskList = () => {
                     </li>
                 </ul>
             </header>
-            <div>
-                <h1>Lista Task</h1>
-            </div>
+            <h1>Lista Task</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Stato</th>
+                        <th>Data di Creazione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {task.map((t, i) => (
+                        <TaskRow key={i} title={t.title} status={t.status} createdAt={t.createdAt} />
+                    ))}
+                </tbody>
+            </table>
         </>
     )
 }
