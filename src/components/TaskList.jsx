@@ -5,7 +5,7 @@ import TaskRow from './TaskRow';
 
 const TaskList = () => {
 
-    const { task } = useFetchContext();
+    const { tasks } = useFetchContext();
 
     return (
         <>
@@ -30,7 +30,7 @@ const TaskList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {task.map((t, i) => (
+                    {tasks?.map((t, i) => (
                         <TaskRow key={i} title={t.title} status={t.status} createdAt={t.createdAt} />
                     ))}
                 </tbody>

@@ -1,24 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useTasks from "../components/customHook/useTasks";
 
 const FetchContext = createContext();
 
 const FetchProvider = ({ children }) => {
 
-    const [task, setTask] = useState([])
-
-    useEffect(() => {
-        const apiUrl = import.meta.env.VITE_API_URL
-        fetch(`${apiUrl}/tasks`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setTask(data)
-            })
-            .catch(error => console.error(error))
-    }, [])
+    const { tasks, setTasks, addTask, removeTask, updateTask } = useTasks()
 
     return (
-        <FetchContext.Provider value={{ task, setTask }}>
+        <FetchContext.Provider value={{ tasks, setTasks, addTask, removeTask, updateTask }}>
             {children}
         </FetchContext.Provider>
     )
