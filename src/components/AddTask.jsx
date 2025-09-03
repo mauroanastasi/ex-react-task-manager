@@ -1,14 +1,28 @@
 import React, { useState, useRef, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
+import useTasks from './customHook/useTasks'
 
 const AddTask = () => {
 
-    function handleSubmit(e) {
+    const { addTask } = useTasks()
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log({ "Nome del Task": nameTask, "Descrizione": refTextArea.current.value, "Status": refSelect.current.value })
+        let newTaskToAdd = { "title": nameTask, "description": refTextArea.current.value, "status": refSelect.current.value }
+        try {
+            await addTask(newTaskToAdd);
+            alert("Task creata con successo");
+            setNameTask("");
+            refTextArea.current.value = "";
+        } catch (error) {
+            alert(error.message);
+        }
+
     }
 
+
     const [nameTask, setNameTask] = useState("");
+
 
     const isUsernameNotValid = useMemo(() => {
         const symbols = "!@#$%^&*()-_=+[]{}|;:'\"\,.<>?/`~";
@@ -18,8 +32,10 @@ const AddTask = () => {
         return valid || !nameTask.trim()
     }, [nameTask])
 
+
     const refTextArea = useRef()
     const refSelect = useRef()
+
 
     return (
         <>

@@ -20,9 +20,21 @@ const useTasks = () => {
     }, [])
 
 
-    const addTask = () => {
+    const addTask = async (task) => {
+        try {
+            const response = await axios.post(`${apiUrl}/tasks`, task);
+            if (response.data.success) {
+                setTasks(prev => [...prev, response.data.task]);
+            } else {
+                throw new Error(response.data.message);
+            }
+        } catch (err) {
+            throw err;
+        }
+    };
 
-    }
+
+
     const removeTask = () => {
 
     }
