@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 const useTasks = () => {
 
@@ -20,6 +20,7 @@ const useTasks = () => {
     }, [])
 
 
+
     const addTask = async (task) => {
         try {
             const response = await axios.post(`${apiUrl}/tasks`, task);
@@ -35,7 +36,17 @@ const useTasks = () => {
 
 
 
-    const removeTask = () => {
+    const removeTask = async (d) => {
+        try {
+            const response = await axios.delete(`${apiUrl}/tasks/${d}`)
+            if (response.data.success) {
+                setTasks(prev => prev.filter((p) => p.id !== d))
+            } else {
+                throw new Error(response.data.message)
+            }
+        } catch (err) {
+            throw err
+        }
 
     }
     const updateTask = () => {
