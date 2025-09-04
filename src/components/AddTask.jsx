@@ -61,15 +61,19 @@ const AddTask = () => {
 
                 <label htmlFor="descriz">Descrizione: </label>
                 <textarea ref={refTextArea} id='descriz' ></textarea>
+
                 <br />
                 <br />
+
                 <label htmlFor="status">Stato: </label>
                 <select ref={refSelect} id="status">
                     <option value="To do">To do</option>
                     <option value="Doing">Doing</option>
                     <option value="Done">Done</option>
                 </select>
+
                 <hr />
+
                 <button type='submit'>Aggiungi Task</button>
             </form>
         </>
